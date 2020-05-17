@@ -4,7 +4,7 @@
 
 ## Usage
 ```typescript
-import Behin from "./mod.ts";
+import Behin from "https://deno.land/x/behin/mod.ts";
 
 // Generate a Base32 encoded secret.
 const secret = Behin.generateSecret();
