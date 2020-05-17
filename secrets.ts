@@ -1,4 +1,4 @@
-import { encode } from "https://deno.land/std/encoding/base32.ts";
+import { encode } from "./deps.ts";
 
 export function generateSecret(length?: number): string {
   const secretLength = length || 32;

@@ -1,5 +1,4 @@
-import { decode } from "https://deno.land/std/encoding/base32.ts";
-import { hmac } from "https://deno.land/x/hmac@v1.0.2/mod.ts";
+import { decode, hmac } from "./deps.ts";
 import IOptions from "./mod.d.ts";
 
 export enum Alg {
