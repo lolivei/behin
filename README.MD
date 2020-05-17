@@ -6,8 +6,8 @@
 ```typescript
 import Behin from "./mod.ts";
 
-// Generate secret.
-const secret = Behin.generateSecret({ bytes: 256 });
+// Generate a Base32 encoded secret.
+const secret = Behin.generateSecret();
 const token = Behin.totp.generate(secret);
 
 // Verify a time base OTP token
