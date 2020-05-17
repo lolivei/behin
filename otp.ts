@@ -54,6 +54,25 @@ const hotp = {
 
     // return length number off digits
     return lfCode.substr(-digits);
+  },
+  delta: function (secret: string, token: string, counter: number, options?: IOptions): number | null {
+    const digits = options?.digits || 6;
+    const window = options?.window || 0;
+
+    if (!token) throw new Error("Behin: Missing token");
+    if (token.length !== digits) throw new Error("Behin: Wrong token length");
+    
+
+    for (let i = counter; i <= counter + window; i++) {
+      if (hotp.generate(secret, i, options) === token) {
+        return i - counter
+      }
+    }
+
+    return null
+  },
+  verify: function (secret: string, token: string, counter: number, options?: IOptions) {
+    return hotp.delta(secret, token, counter, options) !== null
   }
 }
 
@@ -61,7 +80,23 @@ const totp = {
   generate: function (secret: string, options?: IOptions): string {
     const step = options?.step || 30;
     const counter = Math.floor(Date.now() / step / 1000);
+    
     return hotp.generate(secret, counter, options);
+  },
+  delta: function (secret: string, token: string, options?: IOptions) {
+    const step = options?.step || 30;
+    const window = options?.window || 0;
+    const counter = Math.floor(Date.now() / step / 1000);
+
+    const delta = hotp.delta(secret, token, counter - window, {
+      ...options,
+      window: window + window
+    })
+
+    return delta !== null ? delta - window : null
+  },
+  verify: function (secret: string, token: string, options?: IOptions) {
+    return totp.delta(secret, token, options) !== null
   }
 }
 
