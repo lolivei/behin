@@ -35,6 +35,7 @@ Generates a one-time password for a given secret.
 | **options.digits** |` number` | 6 | Length of the generated token |
 | **options.step** | `number` | 30 | Time step in seconds |
 
+-------
 ```ts
 Behin.totp.verify(secret: string, token: string, options?: IOptions): boolean
 ```
@@ -51,6 +52,8 @@ Verify an OTP token against a base32 encoded secret. Uses the delta function in 
 | **options.digits** |` number` | 6 | Length of the generated token |
 | **options.step** | `number` | 30 | Time step in seconds |
 
+
+--------
 ```ts
 Behin.totp.delta(secret: string, token: string, options?: IOptions): number | null
 ```
