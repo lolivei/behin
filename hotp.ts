@@ -1,5 +1,5 @@
 import { decode, hmac } from "./deps.ts";
-import IOptions from "./mod.d.ts";
+import { IOptions } from "./mod.d.ts";
 
 export enum Alg {
   SHA1 = "sha1",
@@ -26,6 +26,15 @@ function digestOptions(secret: string, counter: number, options?: IOptions): Uin
   return hmac(alg, secretBytes, counterBytes) as Uint8Array;
 }
 
+/**
+ * Generates a HMAC-based one-time password. 
+ * Specify the key and counter, and receive the OTP for the given counter position.
+ * 
+ * @param secret Shared secret between server and client.
+ * @param counter Counter value.
+ * @param options 
+ * @returns OTP token
+ */
 export function generate(secret: string, counter: number, options?: IOptions): string {
   const digits = options?.digits || 6;
 
@@ -48,6 +57,16 @@ export function generate(secret: string, counter: number, options?: IOptions): s
   return lfCode.substr(-digits);
 }
 
+/**
+ * Validates a OTP token against a given secret. By default verifies the token only at the given counter. 
+ * 
+ * A margin can be specified on the `window` option
+ * @param secret Shared secret between server and client.
+ * @param token OTP token to be verified
+ * @param counter Counter value.
+ * @param options 
+ * @returns Returns the counter difference between the client and server. If token is not valid returns null 
+ */
 export function delta(secret: string, token: string, counter: number, options?: IOptions): number | null {
   const digits = options?.digits || 6;
   const window = options?.window || 0;
@@ -65,6 +84,16 @@ export function delta(secret: string, token: string, counter: number, options?: 
   return null;
 }
 
+ /** 
+  * Verifies an OTP token against a base32 encoded secret. Uses the delta function in order to validate the token.
+  * 
+  * @param secret Shared secret between server and client.
+  * @param token OTP token to be verified.
+  * @param counter Counter value.
+  * @param options 
+  * 
+  * @returns True if tokens matches for the given secret and counter for a given window.
+  */
 export function verify(secret: string, token: string, counter: number, options?: IOptions) {
   return delta(secret, token, counter, options) !== null;
 }
