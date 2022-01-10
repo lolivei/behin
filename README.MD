@@ -1,8 +1,10 @@
 # Behin 🦕
 
-> One-time password lib for [Deno](http://deno.land), based on [Speakeasy](https://www.npmjs.com/package/speakeasy).
+> One-time password lib for [Deno](http://deno.land), based on
+> [Speakeasy](https://www.npmjs.com/package/speakeasy).
 
 ## Usage
+
 ```ts
 import Behin from "https://deno.land/x/behin/mod.ts";
 
@@ -10,8 +12,8 @@ import Behin from "https://deno.land/x/behin/mod.ts";
 const secret = Behin.generateSecret();
 
 // Generate one-time token for a given secret
-const token = Behin.totp.generate(secret);
+const token = await Behin.totp.generate(secret);
 
 // Verify a time base OTP token
-const isValid = Behin.totp.verify(secret, token);
+const isValid = await Behin.totp.verify(secret, token);
 ```
