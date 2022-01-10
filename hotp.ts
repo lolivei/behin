@@ -76,7 +76,7 @@ export async function generate(
   const lfCode = new Array(digits + 1).join("0") + code.toString(10);
 
   // return length number off digits
-  return lfCode.substring(-digits);
+  return lfCode.slice(-digits);
 }
 
 /**
