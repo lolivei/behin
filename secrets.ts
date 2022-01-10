@@ -2,7 +2,7 @@ import { encode } from "./deps.ts";
 
 /**
  * Generates a base32 enconded secret.
- * 
+ *
  * @param size - Byte size of generated secret.
  * @returns base32 encoded secret
  */
