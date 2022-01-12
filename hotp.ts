@@ -2,9 +2,9 @@ import { decode } from "./deps.ts";
 import { IOptions } from "./mod.d.ts";
 
 export enum Alg {
-  SHA1 = "sha1",
-  SHA256 = "sha256",
-  SHA512 = "sha512",
+  SHA1 = "SHA-1",
+  SHA256 = "SHA-256",
+  SHA512 = "SHA-512",
 }
 
 function padBase32(secret: string): string {
@@ -76,7 +76,7 @@ export async function generate(
   const lfCode = new Array(digits + 1).join("0") + code.toString(10);
 
   // return length number off digits
-  return lfCode.substring(-digits);
+  return lfCode.slice(-digits);
 }
 
 /**
